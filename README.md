@@ -8,3 +8,5 @@
 - 推理
 
 写一个通用的训练、推理框架，下次直接用。
+
+在这里下载 [mini-coco](https://github.com/chongruo/tiny-coco) 数据集，可以测试。
