@@ -1,2 +1,0 @@
-begin to load data
-finished load data
