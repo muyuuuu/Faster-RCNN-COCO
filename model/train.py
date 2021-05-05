@@ -1,7 +1,6 @@
-import utils, os, torch, time, engine
+import utils, os, torch, time, engine, model
 from data_helper import train_data_set
 from torch.utils.data import DataLoader
-import torchvision.models.detection as td
 import torch.optim as optim
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
@@ -26,15 +25,8 @@ if __name__ == "__main__":
                    log_info='=' * 10 + 'begin to set model' + '=' * 10)
     since = time.time()
     start_epoch = 0
-    anchor_sizes = ((64, ), (128, ), (256, ), (512, ), (1024, ))
-    aspect_ratios = ((0.5, 1.0, 2.0), ) * len(anchor_sizes)
-    rpn_anchor_generator = td.anchor_utils.AnchorGenerator(
-        anchor_sizes, aspect_ratios)
-    # https://github.com/pytorch/vision/blob/master/torchvision/models/detection/faster_rcnn.py
-    detector = td.__dict__['fasterrcnn_resnet50_fpn'](
-        num_classes=515,
-        rpn_anchor_generator=rpn_anchor_generator,
-        pretrained=False)
+
+    detector = model.get_model()
     params = [p for p in detector.parameters() if p.requires_grad]
     optimizer = optim.Adam(params)
     lr_scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.9)
