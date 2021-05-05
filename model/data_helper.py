@@ -1,5 +1,5 @@
+import os, torch
 from PIL import Image
-import torch
 from torch.utils.data import Dataset
 from pycocotools.coco import COCO
 from torchvision.transforms import transforms
@@ -48,3 +48,24 @@ class train_data_set(Dataset):
 
     def __len__(self):
         return len(self.ids)
+
+
+class valid_data_set(Dataset):
+    def __init__(self, image_dir) -> None:
+        super().__init__()
+        self.transform = transforms.Compose([
+            lambda x: Image.open(x).convert('RGB'),
+            # transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            # transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
+        # 获取文件路径下所有的图片名称
+        self.root = image_dir
+        self.images = os.listdir(image_dir)
+
+    def __len__(self):
+        return len(self.images)
+
+    def __getitem__(self, index):
+        image_name = self.images[index]
+        return self.transform(self.root + image_name), image_name
