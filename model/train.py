@@ -15,9 +15,8 @@ if __name__ == "__main__":
     utils.writelog(file=log_file,
                    log_info='=' * 10 + 'begin to load data' + '=' * 10)
     since = time.time()
-    train_set = train_data_set(image_dir='/home/ljw/train_data/',
-                               anno_path='/home/ljw/openbrand_train.json',
-                               device=device)
+    train_set = train_data_set(image_dir='../data/train_data/',
+                               anno_path='../data/openbrand_train.json')
     train_set_load = DataLoader(train_set, batch_size=1, shuffle=True)
     utils.writelog(file=log_file,
                    log_info='=' * 10 + 'finished load data' + '=' * 10 +
