@@ -1,3 +1,4 @@
+from torch._C import Size
 import utils, os, torch, time, engine, model
 from data_helper import train_data_set
 from torch.utils.data import DataLoader
@@ -15,11 +16,16 @@ if __name__ == "__main__":
                    log_info='=' * 10 + 'begin to load data' + '=' * 10)
     since = time.time()
     train_set = train_data_set(image_dir='../data/train_data/',
-                               anno_path='../data/openbrand_train.json')
-    train_set_load = DataLoader(train_set, batch_size=1, shuffle=True)
+                               anno_path='../data/reconstruct-anno.json',
+                               size=512)
+    train_set_load = DataLoader(train_set, batch_size=4, shuffle=True)
     utils.writelog(file=log_file,
                    log_info='=' * 10 + 'finished load data' + '=' * 10 +
                    ',  ' + str(time.time() - since))
+
+    # for images, targets in train_set_load:
+    #     print(targets, '\n')
+    #     break
 
     utils.writelog(file=log_file,
                    log_info='=' * 10 + 'begin to set model' + '=' * 10)

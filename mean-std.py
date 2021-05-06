@@ -1,8 +1,6 @@
 import os
 import numpy as np
 from PIL import Image
-from numpy.core.arrayprint import printoptions
-from numpy.core.fromnumeric import var
 
 root = 'data/train_data/'
 

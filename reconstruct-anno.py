@@ -37,9 +37,12 @@ for idx in range(len(ids)):
             elif key == 'image_id':
                 d['image_id'] = i[key]
             elif key == 'bbox':
-                d['boxes'] = i[key]
+                d['boxes'] = [
+                    i[key][0], i[key][1], i[key][0] + i[key][2],
+                    i[key][1] + i[key][3]
+                ]
             elif key == 'category_id':
-                d['category_id'] = i[key]
+                d['labels'] = i[key]
             elif key == 'area':
                 d['area'] = i[key]
             elif key == 'image_id':
