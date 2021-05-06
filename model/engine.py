@@ -4,6 +4,7 @@ import time
 
 def train_fn(train_dataloader, detector, optimizer, device, scheduler=None):
     detector.train()
+    loss_value = 0
     for images, targets in tqdm(train_dataloader):
         images = list(image.to(device) for image in images)
         # it's key:value for t in targets.items
