@@ -16,5 +16,6 @@
 
 在这里下载 [mini-coco](https://github.com/chongruo/tiny-coco) 数据集，可以测试。
 
-- [ ] 重新解析 `json`，做到可以 `batchsize`
+- [x] 重新解析 `json`，做到可以 `batchsize`
+- [x] 计算图像三个通道的均值和方差，用于标准化
 - [ ] 推理部分完成后，生成 `json`
