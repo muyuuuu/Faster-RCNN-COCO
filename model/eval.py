@@ -7,7 +7,7 @@ device = torch.device("cuda")
 
 
 def test():
-    valid_set = valid_data_set(image_dir='../data/valid_data/')
+    valid_set = valid_data_set(image_dir='../data/valid_data/', size=512)
     valid_set_load = DataLoader(valid_set, batch_size=1, shuffle=False)
 
     detector = model.get_model()

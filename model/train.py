@@ -32,7 +32,9 @@ if __name__ == "__main__":
     since = time.time()
     start_epoch = 0
 
-    detector = model.get_model()
+    num_class = 515 + 1
+
+    detector = model.get_model(num_class)
     params = [p for p in detector.parameters() if p.requires_grad]
     optimizer = optim.Adam(params)
     lr_scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.9)

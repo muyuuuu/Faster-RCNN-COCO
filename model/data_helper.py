@@ -48,11 +48,12 @@ class train_data_set(Dataset):
 
 
 class valid_data_set(Dataset):
-    def __init__(self, image_dir) -> None:
+    def __init__(self, image_dir, size) -> None:
         super().__init__()
+        self.size = size
         self.transform = transforms.Compose([
             lambda x: Image.open(x).convert('RGB'),
-            # transforms.Resize((224, 224)),
+            transforms.Resize((self.size, self.size)),
             transforms.ToTensor(),
             # transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
