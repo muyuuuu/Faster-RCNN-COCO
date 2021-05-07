@@ -1,19 +1,22 @@
 from tqdm import tqdm
 import time
+import utils
 
 
-def train_fn(train_dataloader, detector, optimizer, device, scheduler=None):
+def train_fn(train_dataloader, detector, optimizer, device, epoch, scheduler):
     detector.train()
     loss_value = 0
-    for images, targets in tqdm(train_dataloader):
+    for i, images, targets in enumerate(tqdm(train_dataloader)):
         images = list(image.to(device) for image in images)
         # it's key:value for t in targets.items
         # This is the format the fasterrcnn expects for targets
-        targets = [{
-            k: v.to(device)
-            for k, v in t.items() if not isinstance(v, list)
-        } for t in targets]
-        loss_dict = detector(images, targets)
+        target = []
+        for l, b in zip(targets['labels'], targets['boxes']):
+            d = {}
+            d['labels'] = l.view(-1).to(device)
+            d['boxes'] = b.view(-1, 4).to(device)
+            target.append(d)
+        loss_dict = detector(images, target)
         losses = sum(loss for loss in loss_dict.values())
         loss_value = losses.item()
 
@@ -21,8 +24,11 @@ def train_fn(train_dataloader, detector, optimizer, device, scheduler=None):
         losses.backward()
         optimizer.step()
 
-        if scheduler is not None:
-            scheduler.step()
+        scheduler.step()
+
+        if i % 2000 == 1999:
+            utils.save_checkpoint_state("model1.pth", epoch, detector,
+                                        optimizer, scheduler)
 
     return loss_value
 

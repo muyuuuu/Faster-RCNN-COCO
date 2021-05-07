@@ -13,6 +13,7 @@ Description: 为了 torch 的 batch size 能对齐，重新生成 json
 
 import json
 from pycocotools.coco import COCO
+from tqdm import tqdm
 
 anno_path = 'data/openbrand_train.json'
 coco = COCO(anno_path)
@@ -20,7 +21,7 @@ ids = list(coco.imgs.keys())
 image_dir = 'data/train_data/'
 result = []
 
-for idx in range(len(ids)):
+for idx in tqdm(range(len(ids))):
     img_id = ids[idx]
 
     ann_ids = coco.getAnnIds(imgIds=img_id)

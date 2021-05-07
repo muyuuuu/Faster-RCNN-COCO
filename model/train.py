@@ -48,7 +48,7 @@ if __name__ == "__main__":
     min_loss = 1000000000000
     for epoch in range(start_epoch, start_epoch + 5):
         loss_value = engine.train_fn(train_set_load, detector, optimizer,
-                                     device, lr_scheduler)
+                                     device, epoch, lr_scheduler)
         print("epoch = {}, Training_loss = {}".format(epoch, loss_value))
         utils.writelog(file=log_file,
                        log_info="epoch = {}, Training_loss = {}".format(
