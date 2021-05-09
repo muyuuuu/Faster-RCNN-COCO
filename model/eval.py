@@ -1,4 +1,3 @@
-from torch._C import autocast_decrement_nesting
 import engine, json, torch, os, model, utils
 from data_helper import valid_data_set
 from torch.utils.data import DataLoader
@@ -8,7 +7,8 @@ device = torch.device("cuda")
 
 
 def test():
-    valid_set = valid_data_set(image_dir='../data/valid_data/', size=512)
+    valid_set = valid_data_set(image_dir='/home/liyanni/1307/ljw/val_data/',
+                               size=512)
     valid_set_load = DataLoader(valid_set, batch_size=1, shuffle=False)
 
     detector = model.get_model(516)
