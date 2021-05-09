@@ -28,11 +28,10 @@ def train_fn(train_dataloader, detector, optimizer, device, epoch, scheduler):
 
         scheduler.step()
 
-        # 训练数据过大，训练一部分就保存模型
         if cnt % 1000 == 999:
             cnt = 0
-            utils.save_checkpoint_state("model_tmp.pth", epoch, detector,
-                                        optimizer, scheduler)
+            utils.save_checkpoint_state("tmp.pth", epoch, detector, optimizer,
+                                        scheduler)
 
     return loss_value
 
@@ -45,12 +44,12 @@ def predict(val_dataloader, detector, device):
         outputs = detector(images)
         model_time = time.time() - model_time
         for i, image in enumerate(images):
-            boxes = (outputs[i]["boxes"].data.cpu().numpy().tolist())
-            scores = outputs[i]["scores"].data.cpu().numpy()
-            labels = outputs[i]["labels"].data.cpu().numpy()
+            boxes = (outputs[i]["boxes"].detach().cpu().numpy().tolist())
+            scores = outputs[i]["scores"].detach().cpu().numpy()
+            labels = outputs[i]["labels"].detach().cpu().numpy()
             image_id = image_names[i]
             for b, s, l in zip(boxes, scores, labels):
-                if s > 0.5:
+                if s > 0.1:
                     result = {  # Store the image id and boxes and scores in result dict.
                         "image_id": image_id,
                         "boxes": b,

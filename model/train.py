@@ -15,10 +15,10 @@ if __name__ == "__main__":
     utils.writelog(file=log_file,
                    log_info='=' * 10 + 'begin to load data' + '=' * 10)
     since = time.time()
-    train_set = train_data_set(image_dir='../data/train_data/',
-                               anno_path='../data/reconstruct-anno.json',
+    train_set = train_data_set(image_dir='train_data/',
+                               anno_path='reconstruct-anno.json',
                                size=512)
-    train_set_load = DataLoader(train_set, batch_size=4, shuffle=True)
+    train_set_load = DataLoader(train_set, batch_size=32, shuffle=True)
     utils.writelog(file=log_file,
                    log_info='=' * 10 + 'finished load data' + '=' * 10 +
                    ',  ' + str(time.time() - since))
