@@ -13,7 +13,7 @@ class train_data_set(Dataset):
             lambda x: Image.open(x).convert('RGB'),
             transforms.Resize((self.size, self.size)),
             transforms.ToTensor(),
-            transforms.Normalize((0.44, 0.38, 0.30), (0.012, 0.013, 0.012))
+            # transforms.Normalize((0.44, 0.38, 0.30), (0.012, 0.013, 0.012))
         ])
 
         self.data = []

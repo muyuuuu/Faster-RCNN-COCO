@@ -1,3 +1,4 @@
+from torch._C import autocast_decrement_nesting
 import engine, json, torch, os, model, utils
 from data_helper import valid_data_set
 from torch.utils.data import DataLoader
@@ -10,7 +11,7 @@ def test():
     valid_set = valid_data_set(image_dir='../data/valid_data/', size=512)
     valid_set_load = DataLoader(valid_set, batch_size=1, shuffle=False)
 
-    detector = model.get_model()
+    detector = model.get_model(516)
     checkpoint = torch.load('model.pth')
     detector.load_state_dict(checkpoint['model_state_dict'])
     detector.to(device)
