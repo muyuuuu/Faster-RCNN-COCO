@@ -7,7 +7,7 @@
 - 保存与加载模型
 - 推理
 
-写一个通用的训练、推理框架，下次直接用。注意，这里只是调库，并非自己重头写训练过程。
+写一个通用的训练、推理框架，下次直接用。注意，这里只是调库，并非自己重头写神经网络。
 
 **注意：**
 
@@ -16,6 +16,15 @@
 
 在这里下载 [mini-coco](https://github.com/chongruo/tiny-coco) 数据集，可以测试。
 
-- [x] 重新解析 `json`，做到可以 `batchsize`
-- [x] 计算图像三个通道的均值和方差，用于标准化
-- [x] 推理部分完成后，生成 `json`
+---
+
+- `preprocess` 文件夹，这俩代码都是单独执行的
+  - `mean-std.py`，计算样本三通道的均值与方差，用于数据标准化
+  - `reconstruct-anno.py`，重构 `json`，支持多个 `batchsize`
+- `model` 文件夹
+  - `data_helper.py`，加载数据
+  - `engine.py`，训练与推理的具体过程
+  - `eval.py`，推理程序，`python eval.py` 执行
+  - `model.py`，模型
+  - `train.py`，训练程序，`python train.py` 执行
+  - `utils.py`，保存、加载模型和写入日志
